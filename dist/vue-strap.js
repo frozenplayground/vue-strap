@@ -4201,33 +4201,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	  methods: {
 	    toggle: function toggle() {
-	      this.setup();
+	      this.position();
 	      this.show = !this.show;
 	    },
-	    setup: function setup() {
-	      var _this = this;
-	
-	      if (!this.$els.popover) return console.error("Couldn't find popover v-el in your component that uses popoverMixin.");
+	    position: function position() {
+	      console.log('position');
 	      var popover = this.$els.popover;
 	      var triger = this.$els.trigger.children[0];
-	      if (this.trigger === 'hover') {
-	        this._mouseenterEvent = _EventListener2.default.listen(triger, 'mouseenter', function () {
-	          return _this.show = true;
-	        });
-	        this._mouseleaveEvent = _EventListener2.default.listen(triger, 'mouseleave', function () {
-	          return _this.show = false;
-	        });
-	      } else if (this.trigger === 'focus') {
-	        this._focusEvent = _EventListener2.default.listen(triger, 'focus', function () {
-	          return _this.show = true;
-	        });
-	        this._blurEvent = _EventListener2.default.listen(triger, 'blur', function () {
-	          return _this.show = false;
-	        });
-	      } else {
-	        this._clickEvent = _EventListener2.default.listen(triger, 'click', this.toggle);
-	      }
-	
 	      switch (this.placement) {
 	        case 'top':
 	          this.position.left = triger.offsetLeft - popover.offsetWidth / 2 + triger.offsetWidth / 2;
@@ -4254,7 +4234,29 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  },
 	  ready: function ready() {
-	    this.setup();
+	    var _this = this;
+	
+	    if (!this.$els.popover) return console.error("Couldn't find popover v-el in your component that uses popoverMixin.");
+	    var popover = this.$els.popover;
+	    var triger = this.$els.trigger.children[0];
+	    if (this.trigger === 'hover') {
+	      this._mouseenterEvent = _EventListener2.default.listen(triger, 'mouseenter', function () {
+	        return _this.show = true;
+	      });
+	      this._mouseleaveEvent = _EventListener2.default.listen(triger, 'mouseleave', function () {
+	        return _this.show = false;
+	      });
+	    } else if (this.trigger === 'focus') {
+	      this._focusEvent = _EventListener2.default.listen(triger, 'focus', function () {
+	        return _this.show = true;
+	      });
+	      this._blurEvent = _EventListener2.default.listen(triger, 'blur', function () {
+	        return _this.show = false;
+	      });
+	    } else {
+	      this._clickEvent = _EventListener2.default.listen(triger, 'click', this.toggle);
+	    }
+	    this.position();
 	    this.show = !this.show;
 	  },
 	  beforeDestroy: function beforeDestroy() {

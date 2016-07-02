@@ -37,23 +37,13 @@ const PopoverMixin = {
   },
   methods: {
     toggle() {
-      this.setup();
+      this.position();
       this.show = !this.show
     },
-    setup() {
-      if (!this.$els.popover) return console.error("Couldn't find popover v-el in your component that uses popoverMixin.");
+    position() {
+      console.log('position');
       const popover = this.$els.popover
       const triger = this.$els.trigger.children[0]
-      if (this.trigger === 'hover') {
-        this._mouseenterEvent = EventListener.listen(triger, 'mouseenter', ()=> this.show = true)
-        this._mouseleaveEvent = EventListener.listen(triger, 'mouseleave', ()=> this.show = false)
-      } else if (this.trigger === 'focus') {
-        this._focusEvent = EventListener.listen(triger, 'focus', ()=> this.show = true)
-        this._blurEvent = EventListener.listen(triger, 'blur', ()=> this.show = false)
-      } else {
-        this._clickEvent = EventListener.listen(triger, 'click', this.toggle)
-      }
-
       switch (this.placement) {
         case 'top' :
           this.position.left = triger.offsetLeft - popover.offsetWidth / 2 + triger.offsetWidth / 2
@@ -80,7 +70,19 @@ const PopoverMixin = {
     }
   },
   ready() {
-    this.setup();
+    if (!this.$els.popover) return console.error("Couldn't find popover v-el in your component that uses popoverMixin.");
+    const popover = this.$els.popover
+    const triger = this.$els.trigger.children[0]
+    if (this.trigger === 'hover') {
+      this._mouseenterEvent = EventListener.listen(triger, 'mouseenter', ()=> this.show = true)
+      this._mouseleaveEvent = EventListener.listen(triger, 'mouseleave', ()=> this.show = false)
+    } else if (this.trigger === 'focus') {
+      this._focusEvent = EventListener.listen(triger, 'focus', ()=> this.show = true)
+      this._blurEvent = EventListener.listen(triger, 'blur', ()=> this.show = false)
+    } else {
+      this._clickEvent = EventListener.listen(triger, 'click', this.toggle)
+    }
+    this.position();
     this.show = !this.show
   },
   beforeDestroy() {
