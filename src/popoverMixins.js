@@ -91,6 +91,7 @@ const PopoverMixin = {
         this.show = true
       })
       this._mouseleaveEvent = EventListener.listen(triger, 'mouseleave', ()=> this.show = false)
+      this._clickEvent = EventListener.listen(triger, 'click', ()=> this.show = false)
     } else if (this.trigger === 'focus') {
       this._focusEvent = EventListener.listen(triger, 'focus', ()=> {
         if (! this.enabled) {

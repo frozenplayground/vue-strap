@@ -4259,6 +4259,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this._mouseleaveEvent = _EventListener2.default.listen(triger, 'mouseleave', function () {
 	        return _this.show = false;
 	      });
+	      this._clickEvent = _EventListener2.default.listen(triger, 'click', function () {
+	        return _this.show = false;
+	      });
 	    } else if (this.trigger === 'focus') {
 	      this._focusEvent = _EventListener2.default.listen(triger, 'focus', function () {
 	        if (!_this.enabled) {
