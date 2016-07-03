@@ -4187,6 +4187,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	    placement: {
 	      type: String
+	    },
+	    enabled: {
+	      type: Boolean,
+	      default: true
 	    }
 	  },
 	  data: function data() {
@@ -4201,6 +4205,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	  methods: {
 	    toggle: function toggle() {
+	      if (!this.enabled) {
+	        return;
+	      }
 	      if (!this.show) {
 	        this.setPosition();
 	      }
@@ -4243,6 +4250,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var triger = this.$els.trigger.children[0];
 	    if (this.trigger === 'hover') {
 	      this._mouseenterEvent = _EventListener2.default.listen(triger, 'mouseenter', function () {
+	        if (!_this.enabled) {
+	          return;
+	        }
 	        _this.setPosition();
 	        _this.show = true;
 	      });
@@ -4251,6 +4261,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	      });
 	    } else if (this.trigger === 'focus') {
 	      this._focusEvent = _EventListener2.default.listen(triger, 'focus', function () {
+	        if (!_this.enabled) {
+	          return;
+	        }
 	        _this.setPosition();
 	        _this.show = true;
 	      });

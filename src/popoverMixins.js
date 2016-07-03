@@ -24,6 +24,10 @@ const PopoverMixin = {
     },
     placement: {
       type: String
+    },
+    enabled: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
@@ -37,6 +41,9 @@ const PopoverMixin = {
   },
   methods: {
     toggle() {
+      if (! this.enabled) {
+        return;
+      }
       if (! this.show) {
         this.setPosition();
       }
@@ -77,12 +84,18 @@ const PopoverMixin = {
     const triger = this.$els.trigger.children[0]
     if (this.trigger === 'hover') {
       this._mouseenterEvent = EventListener.listen(triger, 'mouseenter', ()=> {
+        if (! this.enabled) {
+          return;
+        }
         this.setPosition()
         this.show = true
       })
       this._mouseleaveEvent = EventListener.listen(triger, 'mouseleave', ()=> this.show = false)
     } else if (this.trigger === 'focus') {
       this._focusEvent = EventListener.listen(triger, 'focus', ()=> {
+        if (! this.enabled) {
+          return;
+        }
         this.setPosition()
         this.show = true
       })
