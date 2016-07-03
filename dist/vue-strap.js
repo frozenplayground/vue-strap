@@ -4201,13 +4201,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	  methods: {
 	    toggle: function toggle() {
-	      this.position();
+	      if (!this.show) {
+	        this.setPosition();
+	      }
 	      this.show = !this.show;
 	    },
-	    position: function position() {
-	      console.log('position');
+	    setPosition: function setPosition() {
 	      var popover = this.$els.popover;
 	      var triger = this.$els.trigger.children[0];
+	      popover.style.display = 'block';
 	      switch (this.placement) {
 	        case 'top':
 	          this.position.left = triger.offsetLeft - popover.offsetWidth / 2 + triger.offsetWidth / 2;
@@ -4241,14 +4243,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var triger = this.$els.trigger.children[0];
 	    if (this.trigger === 'hover') {
 	      this._mouseenterEvent = _EventListener2.default.listen(triger, 'mouseenter', function () {
-	        return _this.show = true;
+	        _this.setPosition();
+	        _this.show = true;
 	      });
 	      this._mouseleaveEvent = _EventListener2.default.listen(triger, 'mouseleave', function () {
 	        return _this.show = false;
 	      });
 	    } else if (this.trigger === 'focus') {
 	      this._focusEvent = _EventListener2.default.listen(triger, 'focus', function () {
-	        return _this.show = true;
+	        _this.setPosition();
+	        _this.show = true;
 	      });
 	      this._blurEvent = _EventListener2.default.listen(triger, 'blur', function () {
 	        return _this.show = false;
@@ -4256,7 +4260,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    } else {
 	      this._clickEvent = _EventListener2.default.listen(triger, 'click', this.toggle);
 	    }
-	    this.position();
+	    this.setPosition();
 	    this.show = !this.show;
 	  },
 	  beforeDestroy: function beforeDestroy() {

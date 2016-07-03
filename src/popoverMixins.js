@@ -37,13 +37,15 @@ const PopoverMixin = {
   },
   methods: {
     toggle() {
-      this.position();
-      this.show = !this.show
+      if (! this.show) {
+        this.setPosition();
+      }
+      this.show = !this.show        
     },
-    position() {
-      console.log('position');
+    setPosition() {
       const popover = this.$els.popover
       const triger = this.$els.trigger.children[0]
+      popover.style.display = 'block';
       switch (this.placement) {
         case 'top' :
           this.position.left = triger.offsetLeft - popover.offsetWidth / 2 + triger.offsetWidth / 2
@@ -74,15 +76,21 @@ const PopoverMixin = {
     const popover = this.$els.popover
     const triger = this.$els.trigger.children[0]
     if (this.trigger === 'hover') {
-      this._mouseenterEvent = EventListener.listen(triger, 'mouseenter', ()=> this.show = true)
+      this._mouseenterEvent = EventListener.listen(triger, 'mouseenter', ()=> {
+        this.setPosition()
+        this.show = true
+      })
       this._mouseleaveEvent = EventListener.listen(triger, 'mouseleave', ()=> this.show = false)
     } else if (this.trigger === 'focus') {
-      this._focusEvent = EventListener.listen(triger, 'focus', ()=> this.show = true)
+      this._focusEvent = EventListener.listen(triger, 'focus', ()=> {
+        this.setPosition()
+        this.show = true
+      })
       this._blurEvent = EventListener.listen(triger, 'blur', ()=> this.show = false)
     } else {
       this._clickEvent = EventListener.listen(triger, 'click', this.toggle)
     }
-    this.position();
+    this.setPosition();
     this.show = !this.show
   },
   beforeDestroy() {
